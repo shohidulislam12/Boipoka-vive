@@ -4,6 +4,10 @@ import './index.css'
 import App from './App.jsx'
 import Root from './Component/Root/Root.jsx';
 import Errorpage from './ErrorPAgr/Errorpage.jsx';
+ import React from 'react';
+  import { ToastContainer, toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -11,6 +15,7 @@ import {
 import HomePage from './Component/HomePage/HomePage.jsx';
 import Dashbord from './Component/Dashbord/Dashbord.jsx';
 import Bookdetails from './Component/BookDetails/Bookdetails.jsx';
+import ListedBooks from './ListedBooks/ListedBooks.jsx';
 const router = createBrowserRouter([
   {
     path: "/",
@@ -26,6 +31,13 @@ const router = createBrowserRouter([
         
         element:<Bookdetails></Bookdetails>,
         loader:()=>fetch('booksData.json')
+      },
+      {
+        path:'listedbooks',
+        
+        element:<ListedBooks></ListedBooks>,
+        loader:()=>fetch('/booksData.json')
+        
       },
       {
         path:'dashbord',
