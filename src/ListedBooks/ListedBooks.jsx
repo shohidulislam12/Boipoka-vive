@@ -8,6 +8,7 @@ import { getWishlist } from '../Component/BookDetails/wishlist';
 
 const ListedBooks = () => {
   const [readList,setReadList]=useState([])
+  const [sort,setSort]=useState('')
   const allBooks=useLoaderData()
   useEffect(()=>{
   const storedList=getStoredReadList()
@@ -22,9 +23,32 @@ const wishListInt=wishList.map(id=>parseInt(id))
 const Wishbooklist=allBooks.filter(book=>wishListInt.includes(book.bookId))
 setWishList(Wishbooklist)
   },[])
+  const handleSort=sorttype=>{
+    setSort(sorttype)
+    
+    if(sorttype==="numberOfpage"){
+      const sortedList=[...readList].sort((a,b)=>a.totalPages-b.totalPages)
+      setReadList(sortedList)
+    }
+    
+    if(sorttype==="ratings"){
+      const sortedList=[...readList].sort((b,a)=>a.rating-b.rating)
+      setReadList(sortedList)
+    }
+  }
     return (
         <div>
             <h2 className='my-8'>listed book</h2>
+            <div className="dropdown">
+  <div tabIndex={0} role="button" className="btn m-1">{
+  sort?`sort by ${sort}`:"Sort By"
+  }</div>
+  <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+    <li onClick={()=>handleSort("ratings")}><a>Rating</a></li>
+    <li onClick={()=>handleSort("numberOfpage")}><a>Number of pages</a></li>
+    <li><a>Publisher year</a></li>
+  </ul>
+</div>
             <Tabs>
     <TabList>
       <Tab>Read Books</Tab>
